@@ -79,13 +79,25 @@ describe ArtistsController do
       end
     end
 
-
+    #Remember you have access to the artist variable from the let
     describe 'PUT #update' do
-
+      #before do... what?
+      context 'valid attributes' do
+        it 'assigns the given artist to an instance variable'
+        it 'changes the attributes of the artist'
+        it 'redirects to the artist page'
+      end
+      context 'invalid attributes' do
+        it 'assigns the given artist to an instance variable'
+        it 'does not the attributes of the artist'
+        it 're-renders the edit page'
+      end
     end
 
     describe 'DELETE #destroy' do
-
+      #before do... what?
+      it 'deletes the artist'
+      it 'redirects to the artists index page'
     end
   end
 
