@@ -2,12 +2,11 @@ require 'spec_helper'
 
 describe ArtistsController do
 
-  # describe 'inheritance' do
-  #   it 'inherits from ApplicationController' do
-  #     expect(ArtistsController.is_a?(ApplicationController)).to be true
-  #   end
-  # end
+  subject {ArtistsController}
+  it {should < ApplicationController}
+
   describe 'collection' do
+
     describe 'GET #index' do
       it 'assigns all artists to an instance variable' do
         artist = create(:artist)
@@ -49,16 +48,22 @@ describe ArtistsController do
         end
 
         context 'with invalid attributes' do
-          let(:artist) { build(:invalid_artist) } #Refactor this out
-          it 'does not create a new artist'
-          it 're-renders the :new view'
+          it 'does not create a new artist' do
+            expect{
+              post :create, artist: attributes_for(:invalid_artist)
+            }.to change{ Artist.count }.by(0)
+          end
+          it 're-renders the :new view' do
+            post :create, artist: attributes_for(:invalid_artist)
+            response.should render_template :new
+          end
         end
       end
     end
   end
 
   describe 'member' do
-    let(:artist) { create(:artist) }
+    let!(:artist) { create(:artist) }
 
     describe 'GET #edit' do
       before { get :edit, id: artist }
@@ -130,8 +135,19 @@ describe ArtistsController do
 
     describe 'DELETE #destroy' do
       #before do... what?
-      it 'deletes the artist'
-      it 'redirects to the artists index page'
+      it 'assigns the given artist to an instance variable' do
+        delete :destroy, id: artist
+        assigns(:artist).should eq artist
+      end
+      it 'deletes the artist' do
+        expect {
+          delete :destroy, id: artist
+          }.to change { Artist.count }.by(-1)
+      end
+      it 'redirects to the artists index page' do
+        delete :destroy, id: artist
+        response.should redirect_to artists_path
+      end
     end
   end
 
