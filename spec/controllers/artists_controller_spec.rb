@@ -23,16 +23,33 @@ describe ArtistsController do
     end
 
     describe 'GET #new' do
-        it 'assigns a new artist to an instance variable' do
-          get :new
-          assigns(:artist).should be_an_instance_of(Artist)
-          assigns(:artist).should be_new_record
-        end
-        it 'renders the :new view' do
-          get :new
-          response.should render_template :new
+      it 'assigns a new artist to an instance variable' do
+        get :new
+        assigns(:artist).should be_an_instance_of(Artist)
+        assigns(:artist).should be_new_record
+      end
+      it 'renders the :new view' do
+        get :new
+        response.should render_template :new
+      end
+
+      describe 'POST #create' do
+        context 'with valid attributes' do
+
+            it 'creates a new artist' do
+              expect{
+                post :create, attributes_for(:artist)
+              }.to change{ Artist.count }.by(1)
+            end
+            it 'redirects to artists index page'
         end
 
+        context 'with invalid attributes' do
+          let(:artist) { build(:invalid_artist) }
+          it 'does not create a new artist'
+          it 'renders the :new view'
+        end
+      end
     end
   end
 
@@ -57,17 +74,18 @@ describe ArtistsController do
         response.should render_template :show
       end
     end
+
+
+    describe 'PUT #update' do
+
+    end
+
+    describe 'DELETE #destroy' do
+
+    end
   end
 
 end
-
-
-
-
-
-
-
-
 
 
 

@@ -20,4 +20,23 @@ FactoryGirl.define do
     name Faker::Name.name
     url Faker::Internet.url
   end
+    factory :invalid_artist, class: Artist do
+    id 3
+    name nil
+    url nil
+  end
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
