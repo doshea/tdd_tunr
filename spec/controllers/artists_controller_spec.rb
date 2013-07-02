@@ -81,16 +81,50 @@ describe ArtistsController do
 
     #Remember you have access to the artist variable from the let
     describe 'PUT #update' do
-      #before do... what?
       context 'valid attributes' do
-        it 'assigns the given artist to an instance variable'
-        it 'changes the attributes of the artist'
-        it 'redirects to the artist page'
+        let(:updated_artist) { build(:updated_artist) }
+        it 'assigns the given artist to an instance variable' do
+          put :update, id: artist, artist: attributes_for(:updated_artist)
+          assigns(:artist).should eq artist
+        end
+        it 'changes the attributes of the artist' do
+          original_name = artist.name
+          original_url = artist.url
+          put :update, id: artist, artist: attributes_for(:updated_artist)
+          #artist local variable has invalid attributes
+          artist.reload
+          #artist local variable has now been updated to match the database entry
+          artist.name.should eq updated_artist.name
+          artist.name.should_not eq original_name
+          artist.url.should eq updated_artist.url
+          artist.url.should_not eq original_url
+        end
+        it 'redirects to the artist page' do
+          put :update, id: artist, artist: attributes_for(:updated_artist)
+          response.should redirect_to artist_path(artist)
+        end
       end
       context 'invalid attributes' do
-        it 'assigns the given artist to an instance variable'
-        it 'does not the attributes of the artist'
-        it 're-renders the edit page'
+        it 'assigns the given artist to an instance variable' do
+          put :update, id: artist, artist: attributes_for(:invalid_artist)
+          assigns(:artist).should eq artist
+        end
+        it 'does not change the attributes of the artist' do
+          original_name = artist.name
+          original_url = artist.url
+          put :update, id: artist, artist: attributes_for(:invalid_artist)
+          #artist local variable has invalid attributes
+          artist.reload
+          #artist local variable has now been updated to match the database entry
+          artist.name.should eq original_name
+          artist.name.should_not be_nil
+          artist.url.should eq original_url
+          artist.url.should_not be_nil
+        end
+        it 're-renders the edit page' do
+          put :update, id: artist, artist: attributes_for(:invalid_artist)
+          response.should render_template :edit
+        end
       end
     end
 

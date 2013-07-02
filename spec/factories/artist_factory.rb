@@ -25,6 +25,10 @@ FactoryGirl.define do
     name nil
     url nil
   end
+  factory :updated_artist, class: Artist do
+    name 'my updated name'
+    url 'my updated url'
+  end
 end
 
 

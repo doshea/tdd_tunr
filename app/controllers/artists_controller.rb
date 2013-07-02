@@ -25,4 +25,24 @@ class ArtistsController < ApplicationController
     end
   end
 
+  def update
+    #It is now very imoprtant that we use an instance variable
+    #a local variable can't be checked by assigns in our test
+    @artist = Artist.find(params[:id])
+    if @artist.update_attributes(params[:artist])
+      redirect_to artist_path(@artist)
+    else
+      render :edit
+    end
+  end
+
 end
+
+
+
+
+
+
+
+
+
