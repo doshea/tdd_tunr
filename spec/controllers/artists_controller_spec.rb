@@ -38,7 +38,7 @@ describe ArtistsController do
 
             it 'creates a new artist' do
               expect{
-                post :create, attributes_for(:artist)
+                post :create, artist: attributes_for(:artist)
               }.to change{ Artist.count }.by(1)
             end
             it 'redirects to artists index page'

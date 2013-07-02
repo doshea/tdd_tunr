@@ -16,4 +16,13 @@ class ArtistsController < ApplicationController
     @artist = Artist.find(params[:id])
   end
 
+  def create
+    @artist = Artist.new(params[:artist])
+    if @artist.save
+      redirect_to artists_path
+    else
+      render :new
+    end
+  end
+
 end
