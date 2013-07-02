@@ -41,13 +41,17 @@ describe ArtistsController do
                 post :create, artist: attributes_for(:artist)
               }.to change{ Artist.count }.by(1)
             end
-            it 'redirects to artists index page'
+            it 'redirects to artists index page' do
+              post :create, artist: attributes_for(:artist)
+              response.should redirect_to artists_path
+            end
+
         end
 
         context 'with invalid attributes' do
-          let(:artist) { build(:invalid_artist) }
+          let(:artist) { build(:invalid_artist) } #Refactor this out
           it 'does not create a new artist'
-          it 'renders the :new view'
+          it 're-renders the :new view'
         end
       end
     end
