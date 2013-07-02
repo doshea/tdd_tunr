@@ -1,4 +1,4 @@
 TunrTdd::Application.routes.draw do
-  root :to => 'welcome#index'
+  resources :artists, only: [:index, :new, :edit]
 
 end

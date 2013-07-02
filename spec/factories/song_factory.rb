@@ -11,7 +11,7 @@
 #
 
 FactoryGirl.define do
-  factory :song do
+  factory :song, class: Song do
     id 1
     artist
     album

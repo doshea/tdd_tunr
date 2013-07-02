@@ -10,7 +10,7 @@
 #
 
 FactoryGirl.define do
-  factory :artist do
+  factory :artist, class: Artist do
     id 1
     name Faker::Name.name
     url Faker::Internet.url
