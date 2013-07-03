@@ -1,9 +1,10 @@
 source 'https://rubygems.org'
 
 gem 'rails'
+gem 'nokogiri'
 gem 'pg'
-gem 'haml'
 gem 'jquery-rails'
+gem 'haml'
 
 # Gems used only for assets and not required
 # in production environments by default.

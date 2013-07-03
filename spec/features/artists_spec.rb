@@ -10,10 +10,10 @@ describe 'Artists' do
   describe 'navigation from home page' do
     it 'displays link to artist#index page' do
       visit root_path
-      # page.should have_selector('h1')
-      find('h1').should have_content('HOME')
+
+      current_path.should eq root_path
       click_link('Artists')
-      find('h1').should have_content('Artists')
+      current_path.should eq artists_path
     end
   end
 
@@ -42,11 +42,21 @@ describe 'Artists' do
         find_field('artist_name').value.should eq 'Jimi Hendrix'
         find_field('artist_url').value.should eq 'http://www.jimi.com'
         #submit the form
+        click_button('Create Artist')
       end
-      #check that your Artist count has increased by 1
+      #your Artist count should have increased by 1 and you should have been redirected
+      current_path.should eq artists_path
+      (Artist.count).should eq 3
+
     end
   end
 end
+
+
+
+
+
+
 
 
 

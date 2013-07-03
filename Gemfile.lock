@@ -222,6 +222,7 @@ DEPENDENCIES
   jquery-rails
   launchy
   meta_request
+  nokogiri
   pg
   pry-debugger
   pry-rails
