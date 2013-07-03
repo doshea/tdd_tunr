@@ -35,15 +35,15 @@ describe ArtistsController do
       describe 'POST #create' do
         context 'with valid attributes' do
 
-            it 'creates a new artist' do
-              expect{
-                post :create, artist: attributes_for(:artist)
-              }.to change{ Artist.count }.by(1)
-            end
-            it 'redirects to artists index page' do
+          it 'creates a new artist' do
+            expect{
               post :create, artist: attributes_for(:artist)
-              response.should redirect_to artists_path
-            end
+            }.to change{ Artist.count }.by(1)
+          end
+          it 'redirects to artists index page' do
+            post :create, artist: attributes_for(:artist)
+            response.should redirect_to artists_path
+          end
 
         end
 
@@ -96,7 +96,7 @@ describe ArtistsController do
           original_name = artist.name
           original_url = artist.url
           put :update, id: artist, artist: attributes_for(:updated_artist)
-          #artist local variable has invalid attributes
+          #artist local variable may have old (un-updated) attributes
           artist.reload
           #artist local variable has now been updated to match the database entry
           artist.name.should eq updated_artist.name
@@ -118,7 +118,7 @@ describe ArtistsController do
           original_name = artist.name
           original_url = artist.url
           put :update, id: artist, artist: attributes_for(:invalid_artist)
-          #artist local variable has invalid attributes
+          #artist local variable may have old (un-updated) or invalid attributes
           artist.reload
           #artist local variable has now been updated to match the database entry
           artist.name.should eq original_name
@@ -142,22 +142,14 @@ describe ArtistsController do
       it 'deletes the artist' do
         expect {
           delete :destroy, id: artist
-          }.to change { Artist.count }.by(-1)
+        }.to change { Artist.count }.by(-1)
       end
       it 'redirects to the artists index page' do
         delete :destroy, id: artist
         response.should redirect_to artists_path
       end
     end
+
   end
 
 end
-
-
-
-
-
-
-
-
-
