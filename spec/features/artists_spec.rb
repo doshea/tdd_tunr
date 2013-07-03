@@ -30,6 +30,21 @@ describe 'Artists' do
   describe 'New Artist page' do
     #Write a test to see whether an Artist can be created using a form on the New Artist page
     #Make the test pass
+    it 'has a form for a new artist that can be submitted to make an artist' do
+      visit new_artist_path
+
+      find('h1').should have_content('New Artist')
+      page.should have_selector('form#new_artist')
+
+      within('form#new_artist') do
+        fill_in 'artist_name', with: 'Jimi Hendrix'
+        fill_in 'artist_url', with: 'http://www.jimi.com'
+        find_field('artist_name').value.should eq 'Jimi Hendrix'
+        find_field('artist_url').value.should eq 'http://www.jimi.com'
+        #submit the form
+      end
+      #check that your Artist count has increased by 1
+    end
   end
 end
 
